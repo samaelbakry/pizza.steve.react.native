@@ -10,10 +10,10 @@ interface ContainerProps {
 
 export default function Container({
   children,
-  className = "px-5",
+  className = "px-2",
 }: ContainerProps) {
   return (
-    <SafeAreaView edges={["top"]} style={tw`flex-1 py-5`}>
+    <SafeAreaView edges={["top"]} style={tw`flex-1 py-2 bg-gray-100`}>
       <View style={tw.style("flex-1", className)}>
         {children}
       </View>
