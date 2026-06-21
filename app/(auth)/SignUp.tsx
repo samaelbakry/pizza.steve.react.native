@@ -1,10 +1,10 @@
-import { View, Text } from 'react-native'
+import AuthForm from '@/components/ui/authUi/AuthForm'
 import React from 'react'
 
 export default function SignUp() {
   return (
-    <View>
-      <Text>SignUp</Text>
-    </View>
+    <>
+    <AuthForm type='signup'/>
+    </>
   )
 }
