@@ -92,16 +92,16 @@ export interface TabBarIconProps {
 //     icon: ImageSourcePropType;
 // }
 
-// interface CreateUserParams {
-//     email: string;
-//     password: string;
-//     name: string;
-// }
+export interface CreateUserParams {
+    email: string;
+    password: string;
+    name: string;
+}
 
-// interface SignInParams {
-//     email: string;
-//     password: string;
-// }
+export interface SignInParams {
+    email: string;
+    password: string;
+}
 
 // interface GetMenuParams {
 //     category: string;
