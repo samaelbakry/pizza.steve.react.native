@@ -1,4 +1,4 @@
-import { Slot } from "expo-router";
+import { Redirect, Slot } from "expo-router";
 import React from "react";
 import {
   Dimensions,
@@ -11,8 +11,11 @@ import {
 } from "react-native";
 import tw from "@/lib/tw";
 import { images } from "@/constants";
+import { useAuthStore } from "@/store/auth.store";
 
 export default function AuthLayout() {
+  const { isAuthenticated } = useAuthStore();
+  if (isAuthenticated) return <Redirect href="/" />;
   return (
     <KeyboardAvoidingView
       style={tw`flex-1`}

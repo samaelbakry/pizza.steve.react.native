@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import tw from "@/lib/tw";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { createUser, signIn } from "@/services/auth";
 
 interface AuthFormProps {
@@ -12,18 +12,34 @@ export default function AuthForm({ type }: AuthFormProps) {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false)
   const isSignIn = type === "signin";
+  const router = useRouter()
 
   async function handleSubmiting() {
-    if (!email || !password || (!isSignIn && !name)) {
-      return;
-    }
-    if (!isSignIn) {
-      await createUser({ name, email, password });
-    } else {
-      await signIn({ email, password });
-    }
+  if (!email || !password || (!isSignIn && !name)) {
+    return;
   }
+
+  setLoading(true);
+
+  try {
+    if (isSignIn) {
+      await signIn({ email, password });
+      Alert.alert("Success", "Welcome back!");
+    } else {
+      await createUser({ name, email, password });
+      Alert.alert("Success", "Account created successfully!");
+    }
+
+    router.replace("/");
+    
+  } catch (error: any) {
+    Alert.alert("Error", error?.message ?? "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+}
 
   return (
     <View
@@ -90,9 +106,15 @@ export default function AuthForm({ type }: AuthFormProps) {
         onPress={handleSubmiting}
         style={tw`bg-orange-500 rounded-2xl py-4 items-center`}
       >
+       {loading ?
+        <ActivityIndicator size={4}/> 
+        : 
         <Text style={tw`text-white font-quicksand-bold text-base`}>
-          {isSignIn ? "Sign In" : "Create Account"}
-        </Text>
+            {isSignIn ? "Sign In" : "Create Account"}
+         </Text>
+        }
+          
+      
       </TouchableOpacity>
 
       <View style={tw`flex-row justify-center mt-5`}>
