@@ -3,6 +3,7 @@ import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } fro
 import tw from "@/lib/tw";
 import { Link, useRouter } from "expo-router";
 import { createUser, signIn } from "@/services/auth";
+import { useAuthStore } from "@/store/auth.store";
 
 interface AuthFormProps {
   type: "signin" | "signup";
@@ -13,6 +14,8 @@ export default function AuthForm({ type }: AuthFormProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false)
+  const { fetchAuthenticatedUsers } = useAuthStore();
+
   const isSignIn = type === "signin";
   const router = useRouter()
 
@@ -26,13 +29,16 @@ export default function AuthForm({ type }: AuthFormProps) {
   try {
     if (isSignIn) {
       await signIn({ email, password });
+      await fetchAuthenticatedUsers();
       Alert.alert("Success", "Welcome back!");
+      router.replace("/");
     } else {
       await createUser({ name, email, password });
+      await fetchAuthenticatedUsers();
       Alert.alert("Success", "Account created successfully!");
+      router.replace("/");
     }
 
-    router.replace("/");
     
   } catch (error: any) {
     Alert.alert("Error", error?.message ?? "Something went wrong");

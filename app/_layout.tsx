@@ -24,7 +24,7 @@ export default function RootLayout() {
     fetchAuthenticatedUsers();
   }, []);
 
-  if (!loaded && !error && isLoading) return null;
+  if (!loaded || isLoading) return null;
 
   return (
     <SafeAreaProvider>

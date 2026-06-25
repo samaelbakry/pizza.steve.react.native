@@ -18,11 +18,22 @@ import { ImageSourcePropType } from "react-native";
 //     description: string;
 // }
 
-export interface User extends Models.Document {
-    name: string;
-    email: string;
-    avatar: string;
-}
+// export interface User extends Models.Document {
+//     name: string;
+//     email: string;
+//     avatar: string;
+// }
+export type AppwriteUser = Models.Document & {
+  name: string;
+  email: string;
+  avatar: string;
+};
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+};
 
 // export interface CartCustomization {
 //     id: string;

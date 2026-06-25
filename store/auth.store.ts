@@ -11,7 +11,7 @@ type AuthType = {
   setUser: (value: User) => void;
   setLoading: (value: boolean) => void;
 
-  fetchAuthenticatedUsers: ()=>Promise<void>;
+  fetchAuthenticatedUsers: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthType>((set) => ({
@@ -27,24 +27,37 @@ export const useAuthStore = create<AuthType>((set) => ({
     set({ isLoading: true });
 
     try {
+      //  const user = await getCurrentUser();
+      //  if (user) {
+      //     set({
+      //       isAuthenticated: true,
+      //       user:user as User,
+      //     });
+      //   } else {
+      //     set({
+      //       isAuthenticated: false,
+      //       user: null,
+      //     });
+      //   }
+      const rawUser = await getCurrentUser();
 
-     const user = await getCurrentUser();
-     if (user) {
+      if (rawUser) {
+        const user: User = {
+          id: rawUser.$id,
+          name: rawUser.name,
+          email: rawUser.email,
+          avatar: rawUser.avatar,
+        };
+
         set({
           isAuthenticated: true,
-          user:user as User,
+          user,
         });
-      } else {
-        set({
-          isAuthenticated: false,
-          user: null,
-        });
-      } 
+      }
     } catch (error) {
-
       set({ isAuthenticated: false, user: null });
       console.log(error);
-    }finally {
+    } finally {
       set({ isLoading: false });
     }
   },
