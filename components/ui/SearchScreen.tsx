@@ -1,8 +1,11 @@
 import { View, Text, FlatList, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
-import { MenuItem } from "@/lib/seed";
-import CartBtn from "./CartBtn";
 import { Ionicons } from "@expo/vector-icons";
+import tw from "twrnc";
+
+import CartBtn from "./CartBtn";
+import MenuItemCard from "./MenuItemCard";
+import { MenuItem } from "@/types/types";
 
 type Props = {
   data: MenuItem[];
@@ -12,82 +15,50 @@ export default function SearchScreen({ data }: Props) {
   return (
     <FlatList
       data={data}
+      keyExtractor={(item) => item.name}
       numColumns={2}
-    //   keyExtractor={(item) => item.$id}
-      contentContainerStyle={{ padding: 16 }}
-      columnWrapperStyle={{ justifyContent: "space-between" }}
+      contentContainerStyle={tw`p-4`}
+      columnWrapperStyle={tw`justify-between`}
       ListHeaderComponent={
-        <View style={{ marginBottom: 20 }}>
+        <View style={tw`mb-5`}>
          
           <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: "#f3f3f3",
-              borderRadius: 12,
-              paddingHorizontal: 12,
-              height: 48,
-            }}
+            style={tw`flex-row items-center bg-gray-100 shadow rounded-xl px-3 h-12`}
           >
             <Ionicons name="search" size={20} color="#666" />
 
             <TextInput
               placeholder="Search for food..."
-              placeholderTextColor={"gray"}
-              editable={false} 
-              style={{
-                flex: 1,
-                marginLeft: 10,
-                borderRadius:20,
-              }}
+              placeholderTextColor="gray"
+              editable={false}
+              style={tw`flex-1 ml-3 rounded-full`}
             />
 
-            <CartBtn />
           </View>
 
-          
-          <TouchableOpacity
-            style={{
-              marginTop: 12,
-              backgroundColor: "#eee",
-              alignSelf: "flex-start",
-              paddingHorizontal: 14,
-              paddingVertical: 8,
-              borderRadius: 20,
-            }}
+         <View style={tw`flex-row justify-between items-center mt-2 `}>
+           <TouchableOpacity
+            style={tw`mt-3 self-start bg-gray-200 px-4 py-2 rounded-full`}
           >
-            <Text>Filters</Text>
+            <Text style={tw`text-base font-medium text-gray-800`}>
+              Filters
+            </Text>
           </TouchableOpacity>
+            <CartBtn />
+         </View>
+         
 
           
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "700",
-              marginTop: 20,
-            }}
-          >
+          <Text style={tw`mt-5 text-2xl font-bold text-black`}>
             Search Results
           </Text>
         </View>
       }
-      renderItem={({ item }) => {
-        return (
-            <View
-            style={{
-                width: "48%",
-                height: 180,
-                backgroundColor: "#fafafa",
-                borderRadius: 12,
-                marginBottom: 16,
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-            >
-            <Text>{item.name}</Text>
-          </View>
-        );
-      }}
+      renderItem={({ item  , index}) => (
+   
+        <MenuItemCard item={item} index={index}/>
+   
+      )}
     />
   );
 }

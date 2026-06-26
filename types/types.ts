@@ -2,27 +2,28 @@ import { Models } from "react-native-appwrite";
 
 import { ImageSourcePropType } from "react-native";
 
-// export interface MenuItem extends Models.Document {
-//     name: string;
-//     price: number;
-//     image_url: string;
-//     description: string;
-//     calories: number;
-//     protein: number;
-//     rating: number;
-//     type: string;
-// }
+export interface MenuItem extends Models.Document {
+    name: string;
+    price: number;
+    image_url: string;
+    description: string;
+    calories: number;
+    protein: number;
+    rating: number;
+    type: string;
+}
 
-// export interface Category extends Models.Document {
-//     name: string;
-//     description: string;
-// }
+export interface Category extends Models.Document {
+    name: string;
+    description: string;
+}
 
 // export interface User extends Models.Document {
 //     name: string;
 //     email: string;
 //     avatar: string;
 // }
+
 export type AppwriteUser = Models.Document & {
   name: string;
   email: string;

@@ -1,8 +1,8 @@
 import { images, offers } from "@/constants";
 import React, { Fragment } from "react";
+import { Image } from "expo-image";
 import {
   FlatList,
-  Image,
   Pressable,
   Text,
   TouchableOpacity,
@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import tw from "@/lib/tw";
 import CartBtn from "./CartBtn";
+import OfferImage from "./OfferImage";
 
 export default function MenuCards() {
   return (
@@ -36,7 +37,7 @@ export default function MenuCards() {
               </TouchableOpacity>
             </View>
 
-            <CartBtn/>
+            <CartBtn />
           </View>
         )}
         keyExtractor={(item) => item.title}
@@ -53,18 +54,16 @@ export default function MenuCards() {
                 {({ pressed }) => (
                   <Fragment>
                     <View style={tw`w-1/2 items-center justify-center gap-3`}>
-                      <Image
-                        source={item.image}
-                        resizeMode="contain"
-                        style={[tw`size-50`]}
-                      />
+                      <OfferImage source={item.image} type="offer" />
                     </View>
 
-                    <View style={tw`flex-1 justify-center`}>
+                    <View style={tw`flex-1 justify-center mx-3`}>
                       <Text
+                      
                         style={[
                           tw`text-white text-xl`,
                           { fontFamily: "Quicksand-Bold" },
+                          
                         ]}
                       >
                         {item.title}

@@ -12,11 +12,11 @@ export default function CartBtn() {
       style={tw`
        size-12
         rounded-full
-        bg-zinc-600
+        bg-zinc-400
         items-center
         justify-center
         shadow-sm
-        border border-gray-100
+        border border-gray-300
       `}
     >
       <Image source={images.bag} resizeMode="contain" style={tw`size-6`} />
